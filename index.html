@@ -1,11 +1,39 @@
-
 <html>
 
+    
     <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
+
     <style>
+
+        ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 10;
+  overflow: hidden;
+  background-color: darkslateblue;
+}
+
+li {
+  float: right;
+}
+
+li a {
+  display: block;
+  color: white;
+ font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  text-align: center;
+font-size: 20;
+  padding: 14px 40px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: mediumslateblue;
+}
         
+
         img:hover {
   animation: shake 0.5s;
   animation-iteration-count: infinite;
@@ -26,7 +54,7 @@
 }
         
         body {
-            background-color: #f2f2f2
+            background-color: darkslateblue
         }
     
         tr:hover {background-color: #f5f5f5;}
@@ -40,13 +68,17 @@
   border-collapse: collapse;
 }
 
+        t1 {
+            color: white;
+ font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif
+        }
         
 
 table, th, td {
     text-align: center;
     padding: 10px;
-  border: 1px solid #80b3ff;
-    background-color: #cceeff;
+  border: 1px solid white;
+    background-color: mediumslateblue;
 }
         
         .button {
@@ -54,6 +86,7 @@ table, th, td {
   border: none;
 text-align: center;
 font-size: 14px;
+ font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   color: white;
   padding: 15px 32px;
   text-align: center;
@@ -245,21 +278,34 @@ float: inherit;
         }
     
     
+
+        
+    
+    
     </script>
 
     <body>
+
         
-        <img src="fovers.jpg">
+        <ul>
+  <li><a class="active" href="#home">About</a></li>
+  <li><a href="https://social-media-shiqiao-michael.github.io/Social-Media/contact.html">Contact</a></li>
+  <li><a href="#about">Home</a></li>
+</ul>
+    <img src="fovers.jpg" alt=yomers.exe has stopped working width="600" height="120">
         
-        <div>
-</div>
+        <br>
         
+        
+        <div id="myphoto"></div>
         <button class ="button button6" float: center; onclick="signin()">Sign in</button>
         <button class="button button6" onclick="signout()">Sign out</button>
         <br>
     
         <form>
-            Send a message for the world to view:<br>
+            <br>
+            <t1> Send a message for the world to view:</t1>
+            <br>
             <textarea id="twit" type="text" name="thetweet" cols="100" rows="4"></textarea>
         </form> 
         <button class ="button button4" type="button" onclick="tweet()">Send Message</button>
@@ -267,7 +313,7 @@ float: inherit;
         <br><input id="inputFileToLoad" type="file" onchange="encodeImageFileAsURL();" />
         <div id="imgTest" style="display:none;"></div>
         
-   <div id="myphoto"></div>
+   
     <div id="mytweets"></div>
     <div id="mydata"></div>
     
