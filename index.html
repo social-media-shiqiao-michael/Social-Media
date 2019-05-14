@@ -1,4 +1,4 @@
-html>
+<html>
 
     
     <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
@@ -47,6 +47,7 @@ li a:hover {
   100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
         
+        
         body {
             background-color: darkslateblue
         }
@@ -56,6 +57,7 @@ li a:hover {
         th, td {
             border-bottom: 1px solid #ddd;
         }
+        
         
         
   table {
@@ -91,13 +93,16 @@ float: inherit;
   cursor: pointer;
 }
         
+        
          
         .button2 {background-color: blue; font-size: 12px; border-radius: 8px; }
     .button3 {background-color: red; font-size: 12px; border-radius: 8px; }
 .button4 {background-color: blue; font-size: 12px; border-radius: 8px; }
 .button5 {background-color: black; font-size: 12px; border-radius: 8px; }
         .button6 {background-color: slateblue; font-size: 12px; border-radius: 8px;}
+      
     </style>
+    
     
     <script>
         
@@ -252,27 +257,6 @@ float: inherit;
             // The unique key stored in tweetid is based on a timestamp, so list items will automatically be ordered chronologically. Because Firebase generates a unique key for each tweet, no write conflicts will occur if multiple users add a post at the same time. https://firebase.google.com/docs/database/admin/save-data
             
         }
-        function getData() {
-           var userId = document.getElementById("uid").innerHTML;
-           firebase.database().ref('/tweets/' + userId).once('value', function(snapshot) {
-               console.log(snapshot.val());
-           });
-            
-        function setData() {
-           var userId = document.getElementById("uid").innerHTML;
-           var js_time = Date.now();
-           firebase.database().ref('/tweets/' + userId).set({tweet:"Set over-writes", time: js_time}); 
-       }
-            
-        function updateData() {
-           var userId = document.getElementById("uid").innerHTML;
-           firebase.database().ref('/tweets/' + userId).update({tweet:"Update replaces data, but will leave non replaced data as is"}); 
-       }
-        function pushData() {
-            var userId = document.getElementById("uid").innerHTML;
-            var js_time = Date.now();
-            var tweetid = firebase.database().ref('tweets/' + userId + "/").push({tweet: "push adds to the nodes, a unique key/timestamp is also added", time: js_time});
-        }
         
         function signin() {
             console.log("Signing in");
@@ -320,10 +304,6 @@ float: inherit;
         <button class="button button6" onclick="signout()">Sign out</button>
         <button class="button button6" onclick="pushLikes()">Push likes</button>
         <button class="button button6" onclick="pushUnlikes()">Push unlikes</button>
-        <button class ="button button6" onclick="getData()">Get data</button>
-        <button class ="button button6" onclick="setData()">Set data</button>
-        <button class ="button button6" onclick="updateData()">Update data</button>
-        <button class ="button button6" onclick="pushData()">Push data</button>
         <br>
     
         <form>
@@ -342,5 +322,5 @@ float: inherit;
     <div id="mydata"></div>
     
         
-    </body>    
+    </body> 
 </html>
