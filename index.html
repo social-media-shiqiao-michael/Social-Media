@@ -4,8 +4,29 @@
     <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <h1 id="uid"></h1>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+        div.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background-color: purple;
+  padding: 10px;
+  font-size: 20px;
+}
+        .btn {
+  background-color: #f4511e;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  opacity: 1;
+  transition: 0.3s;
+}
+.btn:hover {opacity: 0.5}
         ul {
   list-style-type: none;
   margin: 0;
@@ -16,6 +37,7 @@
 li {
   float: right;
 }
+
 li a {
   display: block;
   color: white;
@@ -97,9 +119,11 @@ float: inherit;
          
         .button2 {background-color: blue; font-size: 12px; border-radius: 8px; }
     .button3 {background-color: red; font-size: 12px; border-radius: 8px; }
-.button4 {background-color: blue; font-size: 12px; border-radius: 8px; }
+.button4 {background-color: paleturquoise; font-size: 12px; border-radius: 8px; }
 .button5 {background-color: black; font-size: 12px; border-radius: 8px; }
         .button6 {background-color: slateblue; font-size: 12px; border-radius: 8px;}
+        .btn {background-color: slateblue; font-size: 12px; border-radius: 8px;}
+        
       
     </style>
     
@@ -290,32 +314,33 @@ float: inherit;
 
         
         <ul>
+            <img src="fovers.jpg" alt=yomers.exe has stopped working width="600" height="120">
   <li><a class="active" href="#home">About</a></li>
   <li><a href="https://social-media-shiqiao-michael.github.io/Social-Media/contact.html">Contact</a></li>
   <li><a href="#about">Home</a></li>
 </ul>
-    <img src="fovers.jpg" alt=yomers.exe has stopped working width="600" height="120">
+    
         
         <br>
         
         
         <div id="myphoto"></div>
-        <button class ="button button6" float: center; onclick="signin()">Sign in</button>
-        <button class="button button6" onclick="signout()">Sign out</button>
-        <button class="button button6" onclick="pushLikes()">Push likes</button>
-        <button class="button button6" onclick="pushUnlikes()">Push unlikes</button>
+        <button class="btn" float: center; onclick="signin()">Sign in</button>
+        <button class="btn" onclick="signout()">Sign out</button>
+        <button class="btn" onclick="pushLikes()">Push likes</button>
+        <button class="btn" onclick="pushUnlikes()">Push unlikes</button>
         <br>
-    
+    <div class="sticky">
         <form>
             <br>
             <t1> Send a message for the world to view:</t1>
             <br>
             <textarea id="twit" type="text" name="thetweet" cols="100" rows="4"></textarea>
         </form> 
-        <button class ="button button4" type="button" onclick="tweet()">Send Message</button>
-    
+        <button class ="btn" type="button" onclick="tweet()">Send Message</button>
         <br><input id="inputFileToLoad" type="file" onchange="encodeImageFileAsURL();" />
         <div id="imgTest" style="display:none;"></div>
+        </div>
         
    
     <div id="mytweets"></div>
