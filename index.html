@@ -240,8 +240,8 @@ float: inherit;
                 // write data to document
                 mydiv = document.getElementById("mydata");
                 mydiv.innerHTML = name
-                myphotodiv = document.getElementById("myphoto");
-                myphotodiv.innerHTML = "<img src='" + imageUrl + "'/>";
+
+            
                 firebase.database().ref('/tweets').once('value').then(function(snapshot) {
                     var data = (snapshot.val());
                     if (data == null) {
@@ -260,7 +260,7 @@ float: inherit;
                       //updatetweets(data);
                     }
                 });
-            } // end user null checkm
+            } // end user null check
         }); // end check auth state
         
         function encodeImageFileAsURL() {
@@ -299,7 +299,7 @@ float: inherit;
             var mytab = "<table>";
             users = data[1]; // put on top, because changed data - not good coding change later
             data = data[0];
-            
+            count = 0;
             for (var u in data) {
                 for (var t in data[u]) {
                     mytab = mytab + "<tr>";
@@ -310,12 +310,13 @@ float: inherit;
                         mytab = mytab + "<td>" + users[u].email + "</td>";
                         mytab = mytab + "<td>" + data[u][t].tweet + "</td>";
                         mytab = mytab + "<td>" + time + "<br><img src='" + data[u][t].img + "' width='300px'></td>";
+                        mytab = mytab + "<td><button id='" + t + " " + u + "' onclick='likeTweet(this.id)'><i class='far fa-thumbs-up'></i></button> <span id='likes " + t + "'> "+ data[u][t].likes +"</span>likes</td>";
                     } else {
                         mytab = mytab + "<td><img src='" + users[u].profile_picture + "' width='50px'></td>";
                         mytab = mytab + "<td>" + users[u].email + "</td>";
                         mytab = mytab + "<td>" + data[u][t].tweet + "</td>";
                         mytab = mytab + "<td>" + time + "</td>";
-                        
+                        mytab = mytab + "<td><button id='" + t + " " + u + "' onclick='likeTweet(this.id)'><i class='far fa-thumbs-up'></i></button> <span id='likes " + t + "'> "+ data[u][t].likes +"</span> people liked</td>";                        
                         
                     } 
                     mytab = mytab + "</tr>";
@@ -328,6 +329,39 @@ float: inherit;
             mytdiv.innerHTML = mytab;
         }
         
+     function likeTweet(id) {
+             var liketest = id;
+           var info = liketest.split(" ");
+        firebase.database().ref('likes/' + info[0] + "/" + userId).once('value', function(snapshot) {
+               var userswholiked = snapshot.val();
+           if(userswholiked == null) {
+                firebase.database().ref('tweets/' + info[1] + "/" + info[0]).once('value', function(snapshot) {
+             var tweetinfo = snapshot.val();
+             var newlikes = tweetinfo.likes;
+             newlikes++;
+                 firebase.database().ref('tweets/' + info[1] + "/" + info[0]).update({likes: newlikes});
+             var likeid = "likes " + info[0];
+        var likespan = document.getElementById(likeid);
+        likespan.innerHTML = newlikes;
+           });
+        firebase.database().ref('likes/' + info[0] + "/" + userId).once('value', function(snapshot) {
+               var userswholiked = snapshot.val();
+               if(userswholiked.userliked) {
+                   var changebuttoncolour = document.getElementById(id);
+        changebuttoncolour.style.backgroundColor="deepskyblue";
+               }
+           });
+        
+        firebase.database().ref('likes/' + info[0] + "/" + userId).update({userliked:true});
+           }
+               else {
+                   alert("You cannot like a tweet twice");
+                    return;
+                 
+               }
+        });
+    }
+        
         // write tweets to firebase
         function tweet() {
             
@@ -336,7 +370,7 @@ float: inherit;
             var nameValue = twitdoc.value;
             var imgValue = twitimg.innerHTML;
             var js_time = Date.now();
-            var tweetid = firebase.database().ref('tweets/' + userId + "/").push({tweet: nameValue, time: js_time, img: imgValue});
+            var tweetid = firebase.database().ref('tweets/' + userId + "/").push({tweet: nameValue, time: js_time, img: imgValue, likes:0});
             twitdoc.value = "";
             writeUserData(userId, name, email, imageUrl);
             console.log("tweet written")
@@ -351,7 +385,7 @@ float: inherit;
                         if (userdata != null) {
                            dataarray = [data,userdata]
                            console.log(dataarray)
-                           updatetweets(dataarray); 
+                           updatetweets(dataarray);
                         }
                       });
                     }
@@ -376,19 +410,9 @@ float: inherit;
             firebase.auth().signOut().then(function() {
             });
         }
-        function pushLikes() {
-            var userId = document.getElementById("uid").innerHTML;
-            var js_time = Date.now();
-            var tweetid = firebase.database().ref('likes/' + 'someone' + "sometweet").push({'uid': userId, time: js_time});
-        }
-        function pushUnlikes() {
-            var userId = document.getElementById("uid").innerHTML;
-            var js_time = Date.now();
-            var tweetid = firebase.database().ref('unlikes/' + 'someone' + "sometweet").push({'uid': userId, time: js_time});
-        }
+
+
         
-    
-    
     </script>
 
     <body>
@@ -414,11 +438,9 @@ float: inherit;
         <br>
         
         
-        <div id="myphoto" width="150" height="150"></div>
+      
         <button class="btn" float: center; onclick="signin()">Sign in</button>
         <button class="btn" onclick="signout()">Sign out</button>
-        <button class="btn" onclick="pushLikes()">Push likes</button>
-        <button class="btn" onclick="pushUnlikes()">Push unlikes</button>
         <br>
     <div class="sticky">
         <form>
