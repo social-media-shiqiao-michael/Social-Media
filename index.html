@@ -448,6 +448,456 @@ float: inherit;
 
 
         
+<html>
+
+    
+    <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <h1 id="uid"></h1>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        
+        div.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background-color: purple;
+  padding: 10px;
+  font-size: 20px;
+}
+        .sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: slateblue;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+    border-radius: 8px;
+}
+.openbtn:hover {
+  background-color: #444;
+}
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
+        .dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.dropdown-content a {
+  color: darkmagenta;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.dropdown-content a:hover {background-color: #ddd;}
+.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+       
+        .btn {
+  background-color: #f4511e;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  opacity: 1;
+  transition: 0.3s;
+}
+.btn:hover {opacity: 0.5}
+        ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 10;
+  overflow: hidden;
+  background-color: darkslateblue;
+}
+li {
+  float: right;
+}
+li a {
+  display: block;
+  color: white;
+ font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  text-align: center;
+font-size: 20;
+  padding: 14px 40px;
+  text-decoration: none;
+}
+li a:hover {
+  background-color: mediumslateblue;
+}
+        
+        img:hover {
+  animation: shake 0.5s;
+  animation-iteration-count: infinite;
+}
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+        
+        
+        body {
+            background-color: darkslateblue
+        }
+    
+        tr:hover {background-color: #f5f5f5;}
+       
+        th, td {
+            border-bottom: 1px solid #ddd;
+        }
+        
+        
+        
+  table {
+  border-collapse: collapse;
+}
+        t1 {
+            color: white;
+ font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif
+        }
+        
+table, th, td {
+    text-align: center;
+    padding: 10px;
+  border: 1px solid white;
+    background-color: mediumslateblue;
+}
+        
+        .button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+text-align: center;
+font-size: 14px;
+ font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+border-radius: 8px;
+  font-size: 16px;
+float: inherit;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+        
+        
+         
+        .button2 {background-color: blue; font-size: 12px; border-radius: 8px; }
+    .button3 {background-color: red; font-size: 12px; border-radius: 8px; }
+.button4 {background-color: paleturquoise; font-size: 12px; border-radius: 8px; }
+.button5 {background-color: black; font-size: 12px; border-radius: 8px; }
+        .button6 {background-color: slateblue; font-size: 12px; border-radius: 8px;}
+        .btn {background-color: slateblue; font-size: 12px; border-radius: 8px;}
+        
+      
+    </style>
+    
+    
+    <script>
+        
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBxehvQef1U66W97sl7kkEq8NzcEMKFtZs",
+    authDomain: "basic-26355.firebaseapp.com",
+    databaseURL: "https://basic-26355.firebaseio.com",
+    projectId: "basic-26355",
+    storageBucket: "basic-26355.appspot.com",
+    messagingSenderId: "581982699638"
+          };
+        firebase.initializeApp(config);
+                
+        // Check to see if you are logged in
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user == null) {
+                alert("Not logged in.");
+                return;
+            } else {
+                userId = user.uid;
+                name = user.displayName;
+                imageUrl = user.photoURL;
+                email = user.email;
+                    
+                // write user data to users
+                //writeUserData(userId, name, email, imageUrl);
+                // moved to tweet function
+                
+                // write data to document
+                mydiv = document.getElementById("mydata");
+                mydiv.innerHTML = name
+
+            
+                firebase.database().ref('/tweets').once('value').then(function(snapshot) {
+                    var data = (snapshot.val());
+                    if (data == null) {
+                      console.log("No data found at /tweets/" + userId);  
+                    } else {
+                        
+                      firebase.database().ref('/users').once('value').then(function(snapshot) { 
+                        var userdata = (snapshot.val());
+                        if (userdata != null) {
+                           dataarray = [data,userdata]
+                           console.log(dataarray)
+                           updatetweets(dataarray); 
+                        }
+                      });
+                      //console.log(data)
+                      //updatetweets(data);
+                    }
+                });
+            } // end user null check
+        }); // end check auth state
+        
+        function encodeImageFileAsURL() {
+            var filesSelected = document.getElementById("inputFileToLoad").files;
+            if (filesSelected.length > 0) {
+                var fileToLoad = filesSelected[0];
+                var fileReader = new FileReader();
+                fileReader.onload = function(fileLoadedEvent) {
+                    var srcData = fileLoadedEvent.target.result; // <--- data: base64
+                    //var newImage = document.createElement('img');
+                    //newImage.src = srcData;
+                    //document.getElementById("imgTest").innerHTML = newImage.outerHTML;
+                    document.getElementById("imgTest").innerHTML = srcData;
+                    //console.log("Converted Base64 version is: " + document.getElementById("imgTest").innerHTML);
+                    console.log(srcData);
+                }
+                fileReader.readAsDataURL(fileToLoad);
+            }
+        } // end function
+        
+        // write user data
+        function writeUserData(userId, name, email, imageUrl) {
+            firebase.database().ref('users/' + userId).once('value',    function(snapshot) {
+                 if (!snapshot.exists()) {
+                    firebase.database().ref('users/' + userId).set({
+                        username: name,
+                        email: email,
+                        profile_picture : imageUrl
+                    }); 
+                 }                                      
+            });
+        }
+        
+        function updatetweets(data) {
+            //var mylist = "<ul>";
+            var mytab = "<table>";
+            users = data[1]; // put on top, because changed data - not good coding change later
+            data = data[0];
+            count = 0;
+            for (var u in data) {
+                for (var t in data[u]) {
+                    mytab = mytab + "<tr>";
+                    var date = new Date(data[u][t].time);
+                    var time = date.toString();
+                    if (data[u][t].img != "") {
+                        mytab = mytab + "<td><img src='" + users[u].profile_picture + "' width='50px'></td>";
+                        mytab = mytab + "<td>" + users[u].email + "</td>";
+                        mytab = mytab + "<td>" + data[u][t].tweet + "</td>";
+                        mytab = mytab + "<td>" + time + "<br><img src='" + data[u][t].img + "' width='300px'></td>";
+                        mytab = mytab + "<td><button id='" + t + " " + u + "' onclick='likeTweet(this.id)'><i class='far good'></i></button> <span id='likes " + t + "'> "+ data[u][t].likes +"</span> people liked</td>";
+                        mytab = mytab + "<td><button id='" + t + " " + u + "' onclick='unlikeTweet(this.id)'></button> <span id='unlikes " + t + "'> "+ data[u][t].unlikes +"</span> people disliked</td>";
+                    } else {
+                        mytab = mytab + "<td><img src='" + users[u].profile_picture + "' width='50px'></td>";
+                        mytab = mytab + "<td>" + users[u].email + "</td>";
+                        mytab = mytab + "<td>" + data[u][t].tweet + "</td>";
+                        mytab = mytab + "<td>" + time + "</td>";
+                        mytab = mytab + "<td><button id='" + t + " " + u + "' onclick='likeTweet(this.id)'></button> <span id='likes " + t + "'> "+ data[u][t].likes +"</span> people liked</td>";  
+                        mytab = mytab + "<td><button id='" + t + " " + u + "' onclick='unlikeTweet(this.id)'></button> <span id='unlikes " + t + "'> "+ data[u][t].unlikes +"</span> people disliked</td>";
+                        
+                    } 
+                    mytab = mytab + "</tr>";
+                }   
+            }
+            //mylist = mylist + "</ul>";
+            mytab = mytab + "</table>"
+            var mytdiv = document.getElementById("mytweets");
+            //mytdiv.innerHTML = mylist;
+            mytdiv.innerHTML = mytab;
+        }
+        
+     function likeTweet(id) {
+             var liketest = id;
+           var info = liketest.split(" ");
+        firebase.database().ref('likes/' + info[0] + "/" + userId).once('value', function(snapshot) {
+               var userswholiked = snapshot.val();
+           if(userswholiked == null) {
+                firebase.database().ref('tweets/' + info[1] + "/" + info[0]).once('value', function(snapshot) {
+             var tweetinfo = snapshot.val();
+             var newlikes = tweetinfo.likes;
+             newlikes++;
+                 firebase.database().ref('tweets/' + info[1] + "/" + info[0]).update({likes: newlikes});
+             var likeid = "likes " + info[0];
+        var likespan = document.getElementById(likeid);
+        likespan.innerHTML = newlikes;
+           });
+        firebase.database().ref('likes/' + info[0] + "/" + userId).once('value', function(snapshot) {
+               var userswholiked = snapshot.val();
+               if(userswholiked.userliked) {
+                   var changebuttoncolour = document.getElementById(id);
+        changebuttoncolour.style.backgroundColor="no color";
+               }
+           });
+        
+        firebase.database().ref('likes/' + info[0] + "/" + userId).update({userliked:true});
+           }
+               else {
+                   alert("You cannot like a tweet twice");
+                    return;
+                 
+               }
+        });
+    }
+        function unlikeTweet(id) {
+             var unliketest = id;
+           var info = unliketest.split(" ");
+        firebase.database().ref('unlikes/' + info[0] + "/" + userId).once('value', function(snapshot) {
+               var userswhounliked = snapshot.val();
+           if(userswhounliked == null) {
+                firebase.database().ref('tweets/' + info[1] + "/" + info[0]).once('value', function(snapshot) {
+             var tweetinfo = snapshot.val();
+             var newunlikes = tweetinfo.unlikes;
+             newunlikes++;
+                 firebase.database().ref('tweets/' + info[1] + "/" + info[0]).update({unlikes: newunlikes});
+             var unlikeid = "unlikes " + info[0];
+        var unlikespan = document.getElementById(unlikeid);
+        unlikespan.innerHTML = newunlikes;
+           });
+        firebase.database().ref('unlikes/' + info[0] + "/" + userId).once('value', function(snapshot) {
+               var userswhounliked = snapshot.val();
+               if(userswhounliked.userunliked) {
+                   var changebuttoncolour = document.getElementById(id);
+        changebuttoncolour.style.backgroundColor="no color";
+               }
+           });
+        
+        firebase.database().ref('unlikes/' + info[0] + "/" + userId).update({userunliked:true});
+           }
+               else {
+                   alert("You cannot dislike a tweet twice");
+                    return;
+                 
+               }
+        });
+    }
+
+ 
+        // write tweets to firebase
+        function tweet() {
+            
+            var twitdoc = document.getElementById("twit");
+            var twitimg = document.getElementById("imgTest");
+            var nameValue = twitdoc.value;
+            var imgValue = twitimg.innerHTML;
+            var js_time = Date.now();
+            var tweetid = firebase.database().ref('tweets/' + userId + "/").push({tweet: nameValue, time: js_time, img: imgValue, likes:0, unlikes:0});
+            twitdoc.value = "";
+            writeUserData(userId, name, email, imageUrl);
+            console.log("tweet written")
+            
+            firebase.database().ref('/tweets').once('value').then(function(snapshot) {
+                    var data = (snapshot.val());
+                    if (data == null) {
+                      console.log("No data found at /tweets/" + userId);  
+                    } else { 
+                        firebase.database().ref('/users').once('value').then(function(snapshot) { 
+                        var userdata = (snapshot.val());
+                        if (userdata != null) {
+                           dataarray = [data,userdata]
+                           console.log(dataarray)
+                           updatetweets(dataarray);
+                        }
+                      });
+                    }
+                });
+            
+            
+            
+            // The unique key stored in tweetid is based on a timestamp, so list items will automatically be ordered chronologically. Because Firebase generates a unique key for each tweet, no write conflicts will occur if multiple users add a post at the same time. https://firebase.google.com/docs/database/admin/save-data
+            
+        }
+        
+        function signin() {
+            console.log("Signing in");
+            var provider = new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithRedirect(provider).then(function(result) { 
+                window.location.replace("fbtest.html");
+            });
+        }
+        
+        function signout() {
+            console.log("Signing out");
+            firebase.auth().signOut().then(function() {
+            });
+        }
+
+
+        
     </script>
 
     <body>
@@ -457,7 +907,7 @@ float: inherit;
   <a href="#">Sports</a>
   <a href="#">Politics</a>
   <a href="#">Entertainment</a>
-  <a href="#">E-Sports</a>
+  <a href="#">ESports</a>
 </div>
         <div id="main">
 
