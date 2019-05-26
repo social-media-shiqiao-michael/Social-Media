@@ -310,13 +310,15 @@ float: inherit;
                         mytab = mytab + "<td>" + users[u].email + "</td>";
                         mytab = mytab + "<td>" + data[u][t].tweet + "</td>";
                         mytab = mytab + "<td>" + time + "<br><img src='" + data[u][t].img + "' width='300px'></td>";
-                        mytab = mytab + "<td><button id='" + t + " " + u + "' onclick='likeTweet(this.id)'><i class='far fa-thumbs-up'></i></button> <span id='likes " + t + "'> "+ data[u][t].likes +"</span>likes</td>";
+                        mytab = mytab + "<td><button id='" + t + " " + u + "' onclick='likeTweet(this.id)'><i class='far good'></i></button> <span id='likes " + t + "'> "+ data[u][t].likes +"</span>likes</td>";
+                        mytab = mytab + "<td><button id='" + t + " " + u + "' onclick='unlikeTweet(this.id)'></button> <span id='unlikes " + t + "'> "+ data[u][t].unlikes +"</span>unlikes</td>";
                     } else {
                         mytab = mytab + "<td><img src='" + users[u].profile_picture + "' width='50px'></td>";
                         mytab = mytab + "<td>" + users[u].email + "</td>";
                         mytab = mytab + "<td>" + data[u][t].tweet + "</td>";
                         mytab = mytab + "<td>" + time + "</td>";
-                        mytab = mytab + "<td><button id='" + t + " " + u + "' onclick='likeTweet(this.id)'><i class='far fa-thumbs-up'></i></button> <span id='likes " + t + "'> "+ data[u][t].likes +"</span> people liked</td>";                        
+                        mytab = mytab + "<td><button id='" + t + " " + u + "' onclick='likeTweet(this.id)'></button> <span id='likes " + t + "'> "+ data[u][t].likes +"</span> people liked</td>";  
+                        mytab = mytab + "<td><button id='" + t + " " + u + "' onclick='unlikeTweet(this.id)'></button> <span id='unlikes " + t + "'> "+ data[u][t].unlikes +"</span> people disliked</td>";
                         
                     } 
                     mytab = mytab + "</tr>";
@@ -361,7 +363,40 @@ float: inherit;
                }
         });
     }
+        function unlikeTweet(id) {
+             var unliketest = id;
+           var info = unliketest.split(" ");
+        firebase.database().ref('unlikes/' + info[0] + "/" + userId).once('value', function(snapshot) {
+               var userswhounliked = snapshot.val();
+           if(userswhounliked == null) {
+                firebase.database().ref('tweets/' + info[1] + "/" + info[0]).once('value', function(snapshot) {
+             var tweetinfo = snapshot.val();
+             var newunlikes = tweetinfo.unlikes;
+             newunlikes++;
+                 firebase.database().ref('tweets/' + info[1] + "/" + info[0]).update({unlikes: newunlikes});
+             var unlikeid = "unlikes " + info[0];
+        var unlikespan = document.getElementById(unlikeid);
+        unlikespan.innerHTML = newunlikes;
+           });
+        firebase.database().ref('unlikes/' + info[0] + "/" + userId).once('value', function(snapshot) {
+               var userswhounliked = snapshot.val();
+               if(userswhounliked.userunliked) {
+                   var changebuttoncolour = document.getElementById(id);
+        changebuttoncolour.style.backgroundColor="deepskyblue";
+               }
+           });
         
+        firebase.database().ref('unlikes/' + info[0] + "/" + userId).update({userunliked:true});
+           }
+               else {
+                   alert("You cannot dislike a tweet twice");
+                    return;
+                 
+               }
+        });
+    }
+
+ 
         // write tweets to firebase
         function tweet() {
             
@@ -370,7 +405,7 @@ float: inherit;
             var nameValue = twitdoc.value;
             var imgValue = twitimg.innerHTML;
             var js_time = Date.now();
-            var tweetid = firebase.database().ref('tweets/' + userId + "/").push({tweet: nameValue, time: js_time, img: imgValue, likes:0});
+            var tweetid = firebase.database().ref('tweets/' + userId + "/").push({tweet: nameValue, time: js_time, img: imgValue, likes:0, unlikes:0});
             twitdoc.value = "";
             writeUserData(userId, name, email, imageUrl);
             console.log("tweet written")
